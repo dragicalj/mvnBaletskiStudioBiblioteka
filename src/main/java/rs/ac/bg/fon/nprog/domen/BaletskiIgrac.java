@@ -1,12 +1,14 @@
 package rs.ac.bg.fon.nprog.domen;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class BaletskiIgrac {
+public class BaletskiIgrac implements Serializable, ApstraktniDomenskiObjekat{
 	
 	private Long baletskiIgracId;
     private String ime;
@@ -154,5 +156,90 @@ public class BaletskiIgrac {
         }
         return true;
     }
+    
+    @Override
+    public String vratiNazivTabele() {
+        return "baletskiigrac";
+    }
+
+    @Override
+    public String vratiNaziveKolonaZaInsert() {
+        return "Ime, Prezime, DatumRodjenja, Email, BrojTelefona, BrojTelefonaRoditelja, DatumUpisa, TrenutnaClanarina, BaletskaGrupaId";
+    }
+
+    @Override
+    public String vratiVrednostiZaInsert() {
+        return "'" + ime + "', '" + prezime + "', '" + new java.sql.Date(datumRodjenja.getTime()) + "', '" + 
+                     email + "', '" + brojTelefona + "', '"+brojTelefonaRoditelja+"', '" + new java.sql.Date(datumRodjenja.getTime()) + "', "+trenutnaClanarina+", " + baletskaGrupa.getBaletskaGrupaId();
+    }
+
+    @Override
+    public String vratiUslovZaSelect() {
+        return "BaletskiIgracId = " + baletskiIgracId;
+    }
+
+    @Override
+    public String postaviVrednostiAtributa() {
+        return "Ime='" + ime + "', Prezime='" + prezime + "', DatumRodjenja='" + new java.sql.Date(datumRodjenja.getTime()) +
+                "', Email='" + email + "', BrojTelefona='" + brojTelefona +
+                "', BrojTelefonaRoditelja='" + brojTelefonaRoditelja+ "', DatumUpisa='" + new java.sql.Date(datumUpisa.getTime()) +"', TrenutnaClanarina="+ trenutnaClanarina;
+    }
+
+    @Override
+    public String vratiUslovZaPromenuVrednostiAtributa() {
+        return "BaletskiIgracId=" + baletskiIgracId;
+
+    }
+
+    @Override
+    public String vratiUslovZaPretragu() {
+        String upit="";
+        if(!(ime.equals(""))){
+            upit+="ime LIKE '" + ime+"' ";
+        }
+        if(!(prezime.equals("")) && !(ime.equals("")) ){
+            upit+="AND prezime "+"LIKE '"+prezime+"' ";
+        }
+        if(!(prezime.equals("")) && ime.equals("") ){
+            upit+="prezime "+"LIKE '"+prezime+"' ";
+        }
+        return upit;
+    }
+
+    @Override
+    public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
+        List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            BaletskiIgrac baletskiIgrac=new BaletskiIgrac();
+            BaletskaGrupa baletskaGrupa = new BaletskaGrupa();
+            baletskaGrupa.setBaletskaGrupaId(rs.getLong("BaletskaGrupaId"));
+            baletskiIgrac.setBaletskaGrupa(baletskaGrupa);
+            /*baletskaGrupa.setNazivGrupe(rs.getString("NazivGrupe"));
+            baletskaGrupa.setTipGrupe(TipGrupe.valueOf(rs.getString("TipGrupe")));
+            Date datumNastanka = new Date(rs.getDate("DatumNastanka").getTime());
+            baletskaGrupa.setDatumNastanka(datumNastanka);
+            baletskaGrupa.setKapacitet(rs.getInt("Kapacitet"));*/
+            
+            baletskiIgrac.setBaletskiIgracId(rs.getLong("BaletskiIgracId"));
+            baletskiIgrac.setIme(rs.getString("Ime"));
+            baletskiIgrac.setPrezime(rs.getString("Prezime"));
+            Date datumRodjenja = new Date(rs.getDate("DatumRodjenja").getTime());
+            baletskiIgrac.setDatumRodjenja(datumRodjenja);
+            baletskiIgrac.setEmail(rs.getString("Email"));
+            baletskiIgrac.setBrojTelefona(rs.getString("BrojTelefona"));
+            baletskiIgrac.setBrojTelefonaRoditelja(rs.getString("BrojTelefonaRoditelja"));
+            Date datumUpisa = new Date(rs.getDate("DatumUpisa").getTime());
+            baletskiIgrac.setDatumUpisa(datumUpisa);
+            baletskiIgrac.setTrenutnaClanarina(rs.getBigDecimal("TrenutnaClanarina"));
+            lista.add(baletskiIgrac);
+        }
+        return lista;
+    }
+
+    @Override
+    public String vratiUslovZaPretragu2() {
+        return "BaletskaGrupaId = " + baletskaGrupa.getBaletskaGrupaId();
+    }
+
 
 }

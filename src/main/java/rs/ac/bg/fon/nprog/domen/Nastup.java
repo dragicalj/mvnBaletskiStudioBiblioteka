@@ -1,10 +1,14 @@
 package rs.ac.bg.fon.nprog.domen;
 
+import java.io.Serializable;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
-public class Nastup {
+public class Nastup implements Serializable,ApstraktniDomenskiObjekat{
 	
 	private Long nastupId;
     private Date datumVremeNastupa;
@@ -82,5 +86,63 @@ public class Nastup {
         }
         return true;
     }
+    
+    @Override
+    public String vratiNazivTabele() {
+        return "Nastup";
+    }
 
+    @Override
+    public String vratiNaziveKolonaZaInsert() {
+      return "DatumVremeNastupa, TipNastupa, Lokacija";
+    }
+
+    @Override
+    public String vratiVrednostiZaInsert() {
+      return "'" + new java.sql.Date(datumVremeNastupa.getTime()) + "', '" + tipNastupa.toString() + "', " +(lokacija == null ? null : lokacija.getLokacijaId());    }
+
+    @Override
+    public String vratiUslovZaSelect() {
+       return "NastupI = " + nastupId;
+
+    }
+
+    @Override
+    public String postaviVrednostiAtributa() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String vratiUslovZaPromenuVrednostiAtributa() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String vratiUslovZaPretragu() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
+        List<ApstraktniDomenskiObjekat> lista=new ArrayList<>();
+        while(rs.next()){
+            Nastup nastup=new Nastup();
+            
+            Lokacija l=new Lokacija();
+            l.setLokacijaId(rs.getLong("Lokacija"));
+            nastup.setLokacija(l);
+            
+            nastup.setNastupId(rs.getLong("NastupI"));
+            nastup.setDatumVremeNastupa(new Date(rs.getDate("DatumVremeNastupa").getTime()));
+            nastup.setTipNastupa(TipNastupa.valueOf(rs.getString("TipNastupa")));
+            
+            lista.add(nastup);
+        }
+        return lista;
+    }
+
+    @Override
+    public String vratiUslovZaPretragu2() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

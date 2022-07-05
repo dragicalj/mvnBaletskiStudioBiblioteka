@@ -1,9 +1,13 @@
 package rs.ac.bg.fon.nprog.domen;
 
+import java.io.Serializable;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
-public class Koreograf {
+public class Koreograf implements Serializable,ApstraktniDomenskiObjekat {
 	
 	 	private Long koreografId;
 	    private String ime;
@@ -110,4 +114,91 @@ public class Koreograf {
 	        }
 	        return true;
 	    }
+	    
+	    @Override
+	    public String vratiNazivTabele() {
+	        return "Koreograf";
+	    }
+
+	    @Override
+	    public String vratiNaziveKolonaZaInsert() {
+	        return "Ime, Prezime, DatumRodjenja, Email, BrojTelefona, Specijalizovanost";
+	    }
+
+	    @Override
+	    public String vratiVrednostiZaInsert() {
+	        return "'" + ime + "', '" + prezime + "', '" + new java.sql.Date(datumRodjenja.getTime()) + "', '" + 
+	                     email + "', '" + brojTelefona + "', '" + specijalizovanost+"'";
+	    }
+
+	    @Override
+	    public String vratiUslovZaSelect() {
+	        return "KoreografId = " + koreografId;
+	    }
+
+	    @Override
+	    public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
+	        List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+	        while (rs.next()) {
+	            Koreograf koreograf = new Koreograf();
+	            koreograf.setKoreografId(rs.getLong("KoreografId"));
+	            koreograf.setIme(rs.getString("Ime"));
+	            koreograf.setPrezime(rs.getString("Prezime"));
+	            Date datumRodjenja = new Date(rs.getDate("DatumRodjenja").getTime());
+	            koreograf.setDatumRodjenja(datumRodjenja);
+	            koreograf.setEmail(rs.getString("Email"));
+	            koreograf.setBrojTelefona(rs.getString("BrojTelefona"));
+	            koreograf.setSpecijalizovanost(rs.getString("Specijalizovanost"));
+
+	            lista.add(koreograf);
+	        }
+	        return lista;
+	    }
+
+	    @Override
+	    public String postaviVrednostiAtributa() {
+	      return "Ime='" + ime + "', Prezime='" + prezime + "', DatumRodjenja='" + new java.sql.Date(datumRodjenja.getTime()) +
+	                "', Email='" + email + "', BrojTelefona='" + brojTelefona +
+	                "', Specijalizovanost='" + specijalizovanost+"'";
+	    }
+
+	    @Override
+	    public String vratiUslovZaPromenuVrednostiAtributa() {
+	        return "KoreografId=" + koreografId;
+	    }
+
+	    /*@Override
+	    public String vratiUslovZaPretragu() {
+	        return "KoreografId = (SELECT KoreografId FROM koreograf WHERE  LIKE '"
+	                + skiCentar.getNazivSkiCentra() + "')";
+	    }*/
+
+	    @Override
+	    public String vratiUslovZaPretragu() {
+	        String upit="";
+	        if(!(ime.equals(""))){
+	            upit+="ime LIKE '" + ime+"' ";
+	        }
+	        if(!(prezime.equals("")) && !(ime.equals("")) ){
+	            upit+="AND prezime "+"LIKE '"+prezime+"' ";
+	        }
+	        if(!(prezime.equals("")) && ime.equals("") ){
+	            upit+="prezime "+"LIKE '"+prezime+"' ";
+	        }
+	        if(specijalizovanost != null && (!(prezime.equals("")) || !(ime.equals("")))){
+	            upit+="AND specijalizovanost LIKE '"+specijalizovanost+"'";
+	        }
+	        if(specijalizovanost != null && prezime.equals("") && ime.equals("")){
+	            upit+="specijalizovanost LIKE '"+specijalizovanost+"'";
+	        }
+	        
+	        return upit;
+	    }
+
+	    @Override
+	    public String vratiUslovZaPretragu2() {
+	        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	    }
+	    
+	    
 }

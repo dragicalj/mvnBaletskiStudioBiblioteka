@@ -1,10 +1,14 @@
 package rs.ac.bg.fon.nprog.domen;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
-public class Uplata {
+public class Uplata implements Serializable,ApstraktniDomenskiObjekat{
 	
 	private BaletskiIgrac baletskiIgrac;
     private int redniBrojUplate;
@@ -103,5 +107,70 @@ public class Uplata {
             return false;
         }
         return true;
+    }
+    
+    @Override
+    public String vratiNazivTabele() {
+        return "uplata";
+    }
+
+    @Override
+    public String vratiNaziveKolonaZaInsert() {
+        return "BaletskiIgracId, RedniBrojUplate, IznosUplate, DatumUplate, Mesec, Godina";
+    }
+
+    @Override
+    public String vratiVrednostiZaInsert() {
+    return baletskiIgrac.getBaletskiIgracId()+","+redniBrojUplate + ", " + iznosUplate + ", '" + 
+                new java.sql.Date(datumUplate.getTime()) + "', '" + mesec+"', '"+godina+"'";
+    }
+
+    @Override
+    public String vratiUslovZaSelect() {
+        return "BaletskiIgracId = " + baletskiIgrac.getBaletskiIgracId()+ " AND " + "RedniBrojUplate = " + redniBrojUplate;
+
+    }
+
+    @Override
+    public String postaviVrednostiAtributa() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String vratiUslovZaPromenuVrednostiAtributa() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String vratiUslovZaPretragu() {
+            return "BaletskiIgracId= " + baletskiIgrac.getBaletskiIgracId();
+    }
+
+    @Override
+    public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
+        List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+
+        while (rs.next()) {
+            BaletskiIgrac baletskiIgrac=new BaletskiIgrac();
+            Uplata uplata=new Uplata();
+            
+            baletskiIgrac.setBaletskiIgracId(rs.getLong("BaletskiIgracId"));
+            uplata.setBaletskiIgrac(baletskiIgrac);
+            uplata.setRedniBrojUplate(rs.getInt("RedniBrojUplate"));
+            uplata.setIznosUplate(rs.getBigDecimal("IznosUplate"));
+            uplata.setDatumUplate(rs.getDate("DatumUplate"));
+            uplata.setMesec(rs.getString("Mesec"));
+            uplata.setGodina(rs.getString("Godina"));
+            
+                    
+
+            lista.add(uplata);
+        }
+        return lista;
+    }
+
+    @Override
+    public String vratiUslovZaPretragu2() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

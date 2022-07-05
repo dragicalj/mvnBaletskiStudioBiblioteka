@@ -1,8 +1,12 @@
 package rs.ac.bg.fon.nprog.domen;
 
+import java.io.Serializable;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Administrator {
+public class Administrator implements Serializable, ApstraktniDomenskiObjekat{
 	
 	private Long administratorID;
     private String ime;
@@ -86,4 +90,61 @@ public class Administrator {
         }
         return true;
     }
+    
+    @Override
+    public String vratiNazivTabele() {
+        return "Administrator"; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String vratiUslovZaSelect() {
+        return "korisnickoIme='" + korisnickoIme + "' and lozinka='" + lozinka + "'"; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet resultSet) throws Exception {
+        List<ApstraktniDomenskiObjekat> list = new ArrayList<>();
+        while (resultSet.next()) {
+            Administrator administrator = new Administrator();
+            administrator.setAdministratorID(resultSet.getLong("AdministratorId"));
+            administrator.setIme(resultSet.getString("Ime"));
+            administrator.setPrezime(resultSet.getString("Prezime"));
+            administrator.setKorisnickoIme(resultSet.getString("KorisnickoIme"));
+            administrator.setLozinka(resultSet.getString("Lozinka"));
+            
+            list.add(administrator);
+        }
+        return list;
+    }
+
+    @Override
+    public String vratiNaziveKolonaZaInsert() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String vratiVrednostiZaInsert() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String postaviVrednostiAtributa() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String vratiUslovZaPromenuVrednostiAtributa() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String vratiUslovZaPretragu() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String vratiUslovZaPretragu2() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }
