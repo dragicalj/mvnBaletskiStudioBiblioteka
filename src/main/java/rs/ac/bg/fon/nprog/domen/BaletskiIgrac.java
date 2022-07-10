@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class BaletskiIgrac implements Serializable, ApstraktniDomenskiObjekat{
 	
@@ -53,6 +54,12 @@ public class BaletskiIgrac implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setIme(String ime) {
+    	if(ime == null) {
+    		throw new NullPointerException("Ime ne sme biti null!");
+    	}
+    	if(ime.length() < 2) {
+    		throw new RuntimeException("Ime mora imati vise od dva znaka!");
+    	}
         this.ime = ime;
     }
 
@@ -61,6 +68,12 @@ public class BaletskiIgrac implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setPrezime(String prezime) {
+    	if(prezime == null) {
+    		throw new NullPointerException("Prezime ne sme biti null!");
+    	}
+    	if(prezime.length() < 2) {
+    		throw new RuntimeException("Prezime mora imati vise od dva znaka!");
+    	}
         this.prezime = prezime;
     }
 
@@ -69,7 +82,11 @@ public class BaletskiIgrac implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setDatumRodjenja(Date datumRodjenja) {
-        this.datumRodjenja = datumRodjenja;
+    	if(datumRodjenja.after(new java.util.Date())) {
+    		throw new RuntimeException("Datum rodjenja ne sme biti posle danasnjeg datuma!");
+    	}
+
+    	this.datumRodjenja = datumRodjenja;
     }
 
     public String getEmail() {
@@ -77,6 +94,9 @@ public class BaletskiIgrac implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setEmail(String email) {
+    	if(!email.contains("@")) {
+    		throw new RuntimeException("Email adresa mora da sadrzi @!");
+    	}
         this.email = email;
     }
 
@@ -85,6 +105,12 @@ public class BaletskiIgrac implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setBrojTelefona(String brojTelefona) {
+    	Pattern pattern = Pattern.compile("^(\\+)(3816)([0-9]){6,9}$");
+
+    	if(!pattern.matcher(brojTelefona).matches()) {
+    		throw new RuntimeException("Broj telefona nije u dobrom formatu!");
+    	}
+    	
         this.brojTelefona = brojTelefona;
     }
 
@@ -93,6 +119,12 @@ public class BaletskiIgrac implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setBrojTelefonaRoditelja(String brojTelefonaRoditelja) {
+    	Pattern pattern = Pattern.compile("^(\\+)(3816)([0-9]){6,9}$");
+
+    	if(!pattern.matcher(brojTelefona).matches()) {
+    		throw new RuntimeException("Broj telefona nije u dobrom formatu!");
+    	}
+    	
         this.brojTelefonaRoditelja = brojTelefonaRoditelja;
     }
 
@@ -109,6 +141,9 @@ public class BaletskiIgrac implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setTrenutnaClanarina(BigDecimal trenutnaClanarina) {
+    	if(trenutnaClanarina.intValue() < 0) {
+    		throw new RuntimeException("Iznos clanarine mora biti broj veci od 0!");
+    	}
         this.trenutnaClanarina = trenutnaClanarina;
     }
 
@@ -125,6 +160,9 @@ public class BaletskiIgrac implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setListaUplata(List<Uplata> listaUplata) {
+    	if(listaUplata.isEmpty()) {
+    		throw new RuntimeException("Baletski igrac mora imati barem jednu uplatu!");
+    	}
         this.listaUplata = listaUplata;
     }
 
