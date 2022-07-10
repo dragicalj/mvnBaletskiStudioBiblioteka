@@ -18,9 +18,9 @@ public class Lokacija implements Serializable, ApstraktniDomenskiObjekat{
 
     public Lokacija(Long lokacijaId, String nazivGrada, String nazivUstanove, String sala) {
         this.lokacijaId = lokacijaId;
-        this.nazivGrada = nazivGrada;
-        this.nazivUstanove = nazivUstanove;
-        this.sala = sala;
+        setNazivGrada(nazivGrada);
+        setNazivUstanove(nazivUstanove);
+        setSala(sala);
     }
 
     public String getSala() {
@@ -28,6 +28,12 @@ public class Lokacija implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setSala(String sala) {
+    	if(sala == null) {
+    		throw new NullPointerException("Oznaka sale ne sme biti null!");
+    	}
+    	if(sala.length() < 1) {
+    		throw new RuntimeException("Oznaka sale mora imati barem jedan znak!");
+    	}
         this.sala = sala;
     }
 
@@ -44,6 +50,12 @@ public class Lokacija implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setNazivGrada(String nazivGrada) {
+    	if(nazivGrada == null) {
+    		throw new NullPointerException("Naziv grada ne sme biti null!");
+    	}
+    	if(nazivGrada.length() < 2) {
+    		throw new RuntimeException("Naziv grada mora biti duzi od dva karaktera!");
+    	}
         this.nazivGrada = nazivGrada;
     }
 
@@ -52,6 +64,12 @@ public class Lokacija implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setNazivUstanove(String nazivUstanove) {
+    	if(nazivUstanove == null) {
+    		throw new NullPointerException("Naziv ustanove ne sme biti null!");
+    	}
+    	if(nazivUstanove.length() < 2) {
+    		throw new RuntimeException("Naziv ustanove mora biti duzi od dva karaktera!");
+    	}
         this.nazivUstanove = nazivUstanove;
     }
 
