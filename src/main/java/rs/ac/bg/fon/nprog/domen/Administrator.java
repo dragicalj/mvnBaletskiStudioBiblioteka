@@ -19,10 +19,10 @@ public class Administrator implements Serializable, ApstraktniDomenskiObjekat{
 
     public Administrator(Long administratorID, String ime, String prezime, String korisnickoIme, String lozinka) {
         this.administratorID = administratorID;
-        this.ime = ime;
-        this.prezime = prezime;
-        this.korisnickoIme = korisnickoIme;
-        this.lozinka = lozinka;
+        setIme(ime);
+        setPrezime(prezime);
+        setKorisnickoIme(korisnickoIme);
+        setLozinka(lozinka);
     }
     
     public Long getAdministratorID() {
@@ -38,6 +38,12 @@ public class Administrator implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setIme(String ime) {
+    	if(ime == null) {
+    		throw new NullPointerException("Ime ne sme biti null!");
+    	}
+    	if(ime.length() < 2) {
+    		throw new RuntimeException("Ime mora imati vise od dva znaka!");
+    	}
         this.ime = ime;
     }
 
@@ -46,6 +52,12 @@ public class Administrator implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setPrezime(String prezime) {
+    	if(prezime == null) {
+    		throw new NullPointerException("Prezime ne sme biti null!");
+    	}
+    	if(prezime.length() < 2) {
+    		throw new RuntimeException("Prezime mora imati vise od dva znaka!");
+    	}
         this.prezime = prezime;
     }
 
@@ -54,6 +66,9 @@ public class Administrator implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setKorisnickoIme(String korisnickoIme) {
+    	if(korisnickoIme == null) {
+    		throw new NullPointerException("Korisnicko ime ne sme biti null!");
+    	}
         this.korisnickoIme = korisnickoIme;
     }
 
@@ -62,6 +77,12 @@ public class Administrator implements Serializable, ApstraktniDomenskiObjekat{
     }
 
     public void setLozinka(String lozinka) {
+    	if(lozinka == null) {
+    		throw new NullPointerException("Ime ne sme biti null!");
+    	}
+    	if(lozinka.length() <= 4) {
+    		throw new RuntimeException("Lozinka mora imati barem 4 znaka!");
+    	}
         this.lozinka = lozinka;
     }
 
