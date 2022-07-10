@@ -20,7 +20,7 @@ public class Nastup implements Serializable,ApstraktniDomenskiObjekat{
 
     public Nastup(Long nastupId, Date datumVremeNastupa, TipNastupa tipNastupa, Lokacija lokacija) {
         this.nastupId = nastupId;
-        this.datumVremeNastupa = datumVremeNastupa;
+        setDatumVremeNastupa(datumVremeNastupa);
         this.tipNastupa = tipNastupa;
         this.lokacija = lokacija;
     }
@@ -38,6 +38,9 @@ public class Nastup implements Serializable,ApstraktniDomenskiObjekat{
     }
 
     public void setDatumVremeNastupa(Date datumVremeNastupa) {
+    	if(datumVremeNastupa.before(new java.util.Date())) {
+    		throw new RuntimeException("Datum nastupa mora biti posle danasnjeg datuma!");
+    	}
         this.datumVremeNastupa = datumVremeNastupa;
     }
 
