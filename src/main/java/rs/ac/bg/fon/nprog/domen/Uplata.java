@@ -22,11 +22,11 @@ public class Uplata implements Serializable,ApstraktniDomenskiObjekat{
 
     public Uplata(BaletskiIgrac baletskiIgrac, int redniBrojUplate, BigDecimal iznosUplate, Date datumUplate, String mesec, String godina) {
         this.baletskiIgrac = baletskiIgrac;
-        this.redniBrojUplate = redniBrojUplate;
-        this.iznosUplate = iznosUplate;
+        setRedniBrojUplate(redniBrojUplate);
+        setIznosUplate(iznosUplate);
         this.datumUplate = datumUplate;
-        this.mesec = mesec;
-        this.godina = godina;
+        setMesec(mesec);
+        setGodina(godina);
     }
 
     public BaletskiIgrac getBaletskiIgrac() {
@@ -42,6 +42,9 @@ public class Uplata implements Serializable,ApstraktniDomenskiObjekat{
     }
 
     public void setRedniBrojUplate(int redniBrojUplate) {
+    	if(redniBrojUplate <= 0) {
+    		throw new RuntimeException("Redni broj uplate mora biti veci od 0!");
+    	}
         this.redniBrojUplate = redniBrojUplate;
     }
 
@@ -50,6 +53,9 @@ public class Uplata implements Serializable,ApstraktniDomenskiObjekat{
     }
 
     public void setIznosUplate(BigDecimal iznosUplate) {
+    	if(iznosUplate.intValue() <= 0) {
+    		throw new RuntimeException("Iznos uplate mora biti veci od 0!");
+    	}
         this.iznosUplate = iznosUplate;
     }
 
@@ -66,6 +72,9 @@ public class Uplata implements Serializable,ApstraktniDomenskiObjekat{
     }
 
     public void setMesec(String mesec) {
+    	if(mesec == null) {
+    		throw new NullPointerException("Mesec ne sme biti null");
+    	}
         this.mesec = mesec;
     }
 
@@ -74,12 +83,15 @@ public class Uplata implements Serializable,ApstraktniDomenskiObjekat{
     }
 
     public void setGodina(String godina) {
+    	if(godina == null) {
+    		throw new NullPointerException("Godina ne sme biti null");
+    	}
         this.godina = godina;
     }
 
     @Override
     public String toString() {
-        return "Uplata{" + "baletskiIgrac=" + baletskiIgrac + ", redniBrojUplate=" + redniBrojUplate + ", iznosUplate=" + iznosUplate + ", datumUplate=" + datumUplate + ", mesec=" + mesec + ", godina=" + godina + '}';
+        return "Uplata{redniBrojUplate=" + redniBrojUplate + ", iznosUplate=" + iznosUplate +", mesec=" + mesec + ", godina=" + godina + '}';
     }
 
     @Override
