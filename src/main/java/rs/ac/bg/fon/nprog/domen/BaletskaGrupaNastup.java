@@ -135,7 +135,7 @@ public class BaletskaGrupaNastup implements Serializable,ApstraktniDomenskiObjek
             uplata.setGodina(rs.getString("Godina"));    */
 
             lista.add(grupaNastup);
-            System.out.println("lisa iz klase" + lista);
+            //System.out.println("lisa iz klase" + lista);
         }
         return lista;
     }
