@@ -23,10 +23,10 @@ public class BaletskaGrupa implements Serializable,ApstraktniDomenskiObjekat {
 
 	    public BaletskaGrupa(Long baletskaGrupaId, String nazivGrupe, TipGrupe tipGrupe, Date datumNastanka, int kapacitet, Koreograf koreograf, List<BaletskaGrupaNastup> listaNastupa) {
 	        this.baletskaGrupaId = baletskaGrupaId;
-	        this.nazivGrupe = nazivGrupe;
-	        this.tipGrupe = tipGrupe;
-	        this.datumNastanka = datumNastanka;
-	        this.kapacitet = kapacitet;
+	        setNazivGrupe(nazivGrupe);
+	        setTipGrupe(tipGrupe);
+	        setDatumNastanka(datumNastanka);;
+	        setKapacitet(kapacitet);
 	        this.koreograf = koreograf;
 	        this.listaNastupa = listaNastupa;
 	    }
@@ -138,6 +138,9 @@ public class BaletskaGrupa implements Serializable,ApstraktniDomenskiObjekat {
 	    }
 
 	    public void setNazivGrupe(String nazivGrupe) {
+	    	if(nazivGrupe==null) {
+	    		throw new NullPointerException("Naziv ne sme biti null!");
+	    	}
 	        this.nazivGrupe = nazivGrupe;
 	    }
 
@@ -162,6 +165,9 @@ public class BaletskaGrupa implements Serializable,ApstraktniDomenskiObjekat {
 	    }
 
 	    public void setKapacitet(int kapacitet) {
+	    	if(kapacitet <= 0 || kapacitet>50) {
+	    		throw new RuntimeException("Kapaciter grupe ne sme biti broj manji od 0 i veci od 50");
+	    	}
 	        this.kapacitet = kapacitet;
 	    }
 
