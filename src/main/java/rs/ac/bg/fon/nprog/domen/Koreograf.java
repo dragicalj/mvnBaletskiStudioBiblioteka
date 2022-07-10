@@ -2,10 +2,12 @@ package rs.ac.bg.fon.nprog.domen;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Koreograf implements Serializable,ApstraktniDomenskiObjekat {
 	
@@ -22,12 +24,12 @@ public class Koreograf implements Serializable,ApstraktniDomenskiObjekat {
 
 	    public Koreograf(Long koreografId, String ime, String prezime, Date datumRodjenja, String email, String brojTelefona, String specijalizovanost) {
 	        this.koreografId = koreografId;
-	        this.ime = ime;
-	        this.prezime = prezime;
-	        this.datumRodjenja = datumRodjenja;
-	        this.email = email;
-	        this.brojTelefona = brojTelefona;
-	        this.specijalizovanost = specijalizovanost;
+	        setIme(ime);
+	        setPrezime(prezime);
+	        setDatumRodjenja(datumRodjenja);
+	        setEmail(email);
+	        setBrojTelefona(brojTelefona);
+	        setSpecijalizovanost(specijalizovanost);
 	    }
 
 	    public String getSpecijalizovanost() {
@@ -35,6 +37,9 @@ public class Koreograf implements Serializable,ApstraktniDomenskiObjekat {
 	    }
 
 	    public void setSpecijalizovanost(String specijalizovanost) {
+	    	if(!specijalizovanost.equalsIgnoreCase("Klasican balet") && !specijalizovanost.equalsIgnoreCase("Moderan balet") && !specijalizovanost.equalsIgnoreCase("Jazz balet")) {
+	    		throw new RuntimeException("Specijalizovanost koreografa mora biti: klasican, moderan ili jazz balet!");
+	    	}
 	        this.specijalizovanost = specijalizovanost;
 	    }
 
@@ -51,6 +56,12 @@ public class Koreograf implements Serializable,ApstraktniDomenskiObjekat {
 	    }
 
 	    public void setIme(String ime) {
+	    	if(ime == null) {
+	    		throw new NullPointerException("Ime ne sme biti null!");
+	    	}
+	    	if(ime.length() < 2) {
+	    		throw new RuntimeException("Ime mora imati vise od dva znaka!");
+	    	}
 	        this.ime = ime;
 	    }
 
@@ -59,6 +70,12 @@ public class Koreograf implements Serializable,ApstraktniDomenskiObjekat {
 	    }
 
 	    public void setPrezime(String prezime) {
+	    	if(prezime == null) {
+	    		throw new NullPointerException("Prezime ne sme biti null!");
+	    	}
+	    	if(prezime.length() < 2) {
+	    		throw new RuntimeException("Prezime mora imati vise od dva znaka!");
+	    	}
 	        this.prezime = prezime;
 	    }
 
@@ -67,6 +84,9 @@ public class Koreograf implements Serializable,ApstraktniDomenskiObjekat {
 	    }
 
 	    public void setDatumRodjenja(Date datumRodjenja) {
+	    	if(datumRodjenja.after(new java.util.Date())) {
+	    		throw new RuntimeException("Datum rodjenja ne sme biti posle danasnjeg datuma!");
+	    	}
 	        this.datumRodjenja = datumRodjenja;
 	    }
 
@@ -75,6 +95,9 @@ public class Koreograf implements Serializable,ApstraktniDomenskiObjekat {
 	    }
 
 	    public void setEmail(String email) {
+	    	if(!email.contains("@")) {
+	    		throw new RuntimeException("Email adresa mora da sadrzi @!");
+	    	}
 	        this.email = email;
 	    }
 
@@ -83,6 +106,11 @@ public class Koreograf implements Serializable,ApstraktniDomenskiObjekat {
 	    }
 
 	    public void setBrojTelefona(String brojTelefona) {
+	    	Pattern pattern = Pattern.compile("^(\\+)(3816)([0-9]){6,9}$");
+
+	    	if(!pattern.matcher(brojTelefona).matches()) {
+	    		throw new RuntimeException("Broj telefona nije u dobrom formatu!");
+	    	}
 	        this.brojTelefona = brojTelefona;
 	    }
 
@@ -167,12 +195,7 @@ public class Koreograf implements Serializable,ApstraktniDomenskiObjekat {
 	        return "KoreografId=" + koreografId;
 	    }
 
-	    /*@Override
-	    public String vratiUslovZaPretragu() {
-	        return "KoreografId = (SELECT KoreografId FROM koreograf WHERE  LIKE '"
-	                + skiCentar.getNazivSkiCentra() + "')";
-	    }*/
-
+	    
 	    @Override
 	    public String vratiUslovZaPretragu() {
 	        String upit="";
