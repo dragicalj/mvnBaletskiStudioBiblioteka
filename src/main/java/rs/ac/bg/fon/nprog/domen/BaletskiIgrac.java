@@ -184,7 +184,7 @@ public class BaletskiIgrac implements Serializable, ApstraktniDomenskiObjekat{
     /**
      * Vraca datum rodjenja baletskog igraca.
      * 
-     * @return datum rodjenja baletskog igraca kao String.
+     * @return datum rodjenja baletskog igraca kao Date.
      */
     public Date getDatumRodjenja() {
         return datumRodjenja;
@@ -193,8 +193,8 @@ public class BaletskiIgrac implements Serializable, ApstraktniDomenskiObjekat{
     /**
      * Postavlja vrednost atributa datumRodjenja na novu unetu vrednost.
      * 
-     * @param datumRodjenja datumRodjenja baletskog igraca kao Date.
-     * @throws java.lang.RuntimeException ako je uneti datumRodjenja posle danasnjeg datuma
+     * @param datumRodjenja datum rodjenja baletskog igraca kao Date.
+     * @throws java.lang.RuntimeException ako je uneti datum rodjenja posle danasnjeg datuma
      * 
      */
     public void setDatumRodjenja(Date datumRodjenja) {
