@@ -6,27 +6,75 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Klasa koja predstavlja lokacije na kojima se odrzavaju nastupi baletskih grupa baletskog studija. 
+ * Ova klasa implementira interfejs ApstraktniDomenskiObjekat u odnosu na tabelu lokacija u bazi podataka.
+ * Takodje,implementira interfejs Serializiable zbog prolaza kroz mrezu.
+ * 
+ * Lokacija ima svoj jedinstveni identifikator koji je jedinstveno identifikuje, naziv grada, naziv
+ * ustanove i salu u kojoj ce se nastup odrzati
+ * 
+ * @author Dragica Ljubisavljevic
+ * @version 1.0
+ *
+ */
 public class Lokacija implements Serializable, ApstraktniDomenskiObjekat{
 	
+	/**
+	 * ID lokacije kao Long vrednost.
+	 */
 	private Long lokacijaId;
+	/**
+	 * Naziv grada u kome se nastup odrzava kao String.
+	 */
     private String nazivGrada;
+    /**
+	 * Naziv ustanove u kojoj se nastup odrzava kao String.
+	 */
     private String nazivUstanove;
+    /**
+	 * Naziv sale u kojoj se nastup odrzava kao String.
+	 */
     private String sala;
-
+    
+    /**
+     * Konstruktor koji inicijalizuje objekat klase BaletskaGrupa.
+     */
     public Lokacija() {
     }
-
+    
+    /**
+     * Konstruktor koji inicijalizuje objekat klase Lokacija i postavlja prosledjene vrednosti njenim atributima. 
+     * 
+     * @param lokacijaId novi ID lokacije kao Long vrednost.
+     * @param nazivGrada naziv grada za nastup kao String vrednost.
+     * @param nazivUstanove naziv ustanove za nastup kao String vrednost.
+     * @param sala sala za nastup kao String vrednost.
+     */
     public Lokacija(Long lokacijaId, String nazivGrada, String nazivUstanove, String sala) {
         this.lokacijaId = lokacijaId;
         setNazivGrada(nazivGrada);
         setNazivUstanove(nazivUstanove);
         setSala(sala);
     }
-
+    
+    /**
+     * Vraca oznaku sale u kojoj se odrzava nastup baletske grupe.
+     * 
+     * @return oznaka sale kao String.
+     */
     public String getSala() {
         return sala;
     }
-
+    
+    /**
+     * Postavlja vrednost atributa sala na novu unetu vrednost.
+     * 
+     * @param sala oznaka sale za nastup kao String.
+     * @throws java.lang.NullPointerException ako je uneta oznaka sale null
+     * @throws java.lang.RuntimeException ako je uneta oznaka sale koja ima manje od jednog znaka
+     * 
+     */
     public void setSala(String sala) {
     	if(sala == null) {
     		throw new NullPointerException("Oznaka sale ne sme biti null!");
@@ -36,19 +84,42 @@ public class Lokacija implements Serializable, ApstraktniDomenskiObjekat{
     	}
         this.sala = sala;
     }
-
+    
+    /**
+     * Vraca ID lokacije za odrzavanje nastupa.
+     * 
+     * @return ID lokacije kao Long.
+     */
     public Long getLokacijaId() {
         return lokacijaId;
     }
-
+    
+    /**
+     * Postavlja vrednost atributa lokacijaId na novu unetu vrednost.
+     * 
+     * @param lokacijaId ID lokacije kao Long.
+     */
     public void setLokacijaId(Long lokacijaId) {
         this.lokacijaId = lokacijaId;
     }
-
+    
+    /**
+     * Vraca naziv grada u kome ce se nastup odrzati.
+     * 
+     * @return naziv grada kao String.
+     */
     public String getNazivGrada() {
         return nazivGrada;
     }
-
+    
+    /**
+     * Postavlja vrednost atributa nazivGrada na novu unetu vrednost.
+     * 
+     * @param nazivGrada naziv grada u kome ce se nastup odrzati kao String.
+     * @throws java.lang.NullPointerException ako je unet naziv null
+     * @throws java.lang.RuntimeException ako je unet naziv koji ima manje od 2 znaka
+     * 
+     */
     public void setNazivGrada(String nazivGrada) {
     	if(nazivGrada == null) {
     		throw new NullPointerException("Naziv grada ne sme biti null!");
@@ -58,11 +129,24 @@ public class Lokacija implements Serializable, ApstraktniDomenskiObjekat{
     	}
         this.nazivGrada = nazivGrada;
     }
-
+    
+    /**
+     * Vraca naziv ustanove u komjoj ce se nastup odrzati.
+     * 
+     * @return naziv ustanove kao String.
+     */
     public String getNazivUstanove() {
         return nazivUstanove;
     }
-
+    
+    /**
+     * Postavlja vrednost atributa nazivUstanove na novu unetu vrednost.
+     * 
+     * @param nazivUstanove naziv ustanove u komjoj ce se nastup odrzati kao String.
+     * @throws java.lang.NullPointerException ako je unet naziv null
+     * @throws java.lang.RuntimeException ako je unet naziv koji ima manje od 2 znaka
+     * 
+     */
     public void setNazivUstanove(String nazivUstanove) {
     	if(nazivUstanove == null) {
     		throw new NullPointerException("Naziv ustanove ne sme biti null!");
@@ -73,6 +157,11 @@ public class Lokacija implements Serializable, ApstraktniDomenskiObjekat{
         this.nazivUstanove = nazivUstanove;
     }
 
+    /**
+     * Vraca String koji predstavlja naziv ustanove i naziv grada.
+     * 
+     * @return naziv ustanove i naziv grada kao String.
+     */
     @Override
     public String toString() {
         return nazivUstanove+" "+nazivGrada;
@@ -83,7 +172,16 @@ public class Lokacija implements Serializable, ApstraktniDomenskiObjekat{
         int hash = 5;
         return hash;
     }
-
+    
+    /**
+     * Poredi dve lokacije po jedinstvenim identifikatorima i vraca true ili false.
+     * 
+     * @return
+	 * <ul>
+	 * <li>true ako su oba objekta klase Lokacija i imaju isti ID.</li>
+	 * <li>false u svim ostalim slucajevima</li>
+	 * </ul>
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
