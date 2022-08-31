@@ -6,31 +6,79 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Klasa koja predstavlja agregaciju izmedju domenskih objekata BaletksaGrupa i Nastup. 
+ * Ova klasa implementira interfejs ApstraktniDomenskiObjekat u odnosu na tabelu grupanastup u bazi podataka.
+ * Takodje,implementira interfejs Serializiable zbog prolaza kroz mrezu.
+ * 
+ * Jedinstveno je identifikuju identifikatori baletske grupe i nastupa.
+ * 
+ * Jedna baletska grupa moze imati vise nastupa, a na jednom nastupu moze nastupati vise baletskih grupa.
+ * 
+ * @author Dragica Ljubisavljevic
+ * @version 1.0
+ *
+ */
 public class BaletskaGrupaNastup implements Serializable,ApstraktniDomenskiObjekat{
 	
+	/**
+	 * ID baletske grupe tipa BaletskaGrupa.
+	 */
 	private BaletskaGrupa baletskaGrupaId;
+	/**
+	 * ID nastupa tipa Nastup.
+	 */
     private Nastup nastupId;
-
+    
+    /**
+     * Konstruktor koji inicijalizuje objekat klase BaletskaGrupaNastup.
+     */
     public BaletskaGrupaNastup() {
     }
-
+    
+    /**
+	 * Konstruktor koji inicijalizuje objekat klase BaletskaGrupaNastup i postavlja prosledjene vrednosti njenim atributima. 
+     *
+     * @param baletskaGrupaId nova baletska grupa.
+     * @param nastupId novi nastup.
+     */
     public BaletskaGrupaNastup(BaletskaGrupa baletskaGrupaId, Nastup nastupId) {
         this.baletskaGrupaId = baletskaGrupaId;
         this.nastupId = nastupId;
     }
-
+    
+    /**
+     * Vraca nastup.
+     * 
+     * @return nastup tipa Nastup.
+     */
     public Nastup getNastupId() {
         return nastupId;
     }
-
+    
+    /**
+     * Postavlja vrednost atributa baletskaGrupaId na novu unetu vrednost.
+     * 
+     * @param nastupId nastup tipa Nastup
+     */
     public void setNastupId(Nastup nastupId) {
         this.nastupId = nastupId;
     }
-
+    
+    /**
+     * Vraca baletsku grupu.
+     * 
+     * @return baletska grupa tipa BaletskaGrupa.
+     */
     public BaletskaGrupa getBaletskaGrupaId() {
         return baletskaGrupaId;
     }
-
+    
+    /**
+     * Postavlja vrednost atributa baletskaGrupaId na novu unetu vrednost.
+     * 
+     * @param baletskaGrupaId baletska grupa tipa BaletskaGrupa.
+     */
     public void setBaletskaGrupaId(BaletskaGrupa baletskaGrupaId) {
         this.baletskaGrupaId = baletskaGrupaId;
     }
@@ -40,7 +88,16 @@ public class BaletskaGrupaNastup implements Serializable,ApstraktniDomenskiObjek
         int hash = 5;
         return hash;
     }
-
+    
+    /**
+     * Poredi dva nastupa baletske grupe po jedinstvenim identifikatorima baletske grupe i nastupa i vraca true ili false.
+     * 
+     * @return
+	 * <ul>
+	 * <li>true ako su oba objekta klase BaletskaGrupaNastup i imaju ista oba identifikatora.</li>
+	 * <li>false u svim ostalim slucajevima</li>
+	 * </ul>
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -139,7 +196,11 @@ public class BaletskaGrupaNastup implements Serializable,ApstraktniDomenskiObjek
         }
         return lista;
     }
-
+    /**
+     * Vraca String koji sadrzi naziv baletske grupe i informacije o nastupu.
+     * 
+     * @return naziv baletske grupe i informacije o nastupu kao String.
+     */
     @Override
     public String toString() {
         return baletskaGrupaId + " " + nastupId + ""; //To change body of generated methods, choose Tools | Templates.
