@@ -124,7 +124,7 @@ class AdministratorTest {
 	
 	@Test
 	void testSetLozinkaKratakString() {
-		assertThrows(java.lang.RuntimeException.class, () -> a.setLozinka("gaga"));
+		assertThrows(java.lang.RuntimeException.class, () -> a.setLozinka("ga"));
 	}
 
 	@Test

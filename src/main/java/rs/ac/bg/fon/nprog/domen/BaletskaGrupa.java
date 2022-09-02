@@ -1,11 +1,13 @@
 package rs.ac.bg.fon.nprog.domen;
 
 import java.io.Serializable;
+
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
 /**
  * Klasa koja predstavlja baletsku grupu u baletskom studiju. 
  * Ova klasa implementira interfejs ApstraktniDomenskiObjekat u odnosu na tabelu baletskagrupa u bazi podataka.

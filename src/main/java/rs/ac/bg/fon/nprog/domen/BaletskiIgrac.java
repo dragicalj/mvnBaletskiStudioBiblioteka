@@ -357,9 +357,9 @@ public class BaletskiIgrac implements Serializable, ApstraktniDomenskiObjekat{
      * 
      */
     public void setListaUplata(List<Uplata> listaUplata) {
-    	if(listaUplata.isEmpty()) {
+    	/*if(listaUplata.isEmpty()) {
     		throw new RuntimeException("Baletski igrac mora imati barem jednu uplatu!");
-    	}
+    	}*/
         this.listaUplata = listaUplata;
     }
     

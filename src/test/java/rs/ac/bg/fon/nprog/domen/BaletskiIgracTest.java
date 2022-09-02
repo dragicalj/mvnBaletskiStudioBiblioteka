@@ -173,10 +173,10 @@ class BaletskiIgracTest {
 
 	}
 	
-	@Test
+	/*@Test
 	void testSetListaUplataPrazna() {
 		assertThrows(java.lang.RuntimeException.class, () -> baletskiIgrac.setListaUplata(new ArrayList<>()));
-	}
+	}*/
 
 	
 
